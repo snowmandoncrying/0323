@@ -1,0 +1,71 @@
+package chapter01.example02;
+
+public interface InterfaceA {
+
+		public void methodA();
+		
+}
+
+package chapter01.example02;
+
+public interface InterfaceB {
+
+		public void methodB();
+}
+
+package chapter01.example02;
+
+public interface InterfaceC extends InterfaceA, InterfaceB {	// 인터페이스는 다중상속 가능, extends: 확장하다
+
+		public void methodC();	// InterfaceC는 A와 B를 상속받았기때문에 추상메서드 A, B도 갖고있음
+}
+
+package chapter01.example02;
+
+public class Implement implements InterfaceC { // implements : 구현하다
+
+		@Override
+		public void methodA() {
+			System.out.println("Implement-methodA");
+		}
+		@Override
+		public void methodB() {
+			System.out.println("Implement-methodB");
+		}
+		@Override
+		public void methodC() {
+			System.out.println("Implement-methodC");
+		}
+}
+
+package chapter01.example02;
+
+public class ImplementMain {	// 인터페이스는 껍데기만 제공한다. 상세한 것은 구현객체가 재정의해야한다.
+
+	public static void main(String[] args) {
+		
+			Implement imp1 = new Implement();	// 구현 객체의 객체를 생성함.
+			
+			InterfaceA ia = imp1;
+			ia.methodA();
+			System.out.println();
+			
+			InterfaceB ib = imp1;
+			ib.methodB();
+			System.out.println();
+			
+			InterfaceC ic = imp1;	// 결과가 3개가 나옴. 다형성
+			ia.methodA();
+			ib.methodB();
+			ic.methodC();		
+	}
+}
+
+출력
+Implement-methodA
+
+Implement-methodB
+
+Implement-methodA
+Implement-methodB
+Implement-methodC
