@@ -1,0 +1,66 @@
+package chapter01.example08;
+
+public interface Vehicle {
+	
+	public void run();
+}
+
+package chapter01.example08;
+
+public class Taxi implements Vehicle {
+
+	@Override
+	public void run() {
+		System.out.println("택시가 출발합니다.");
+		System.out.println("택시가 멈춥니다.");
+		System.out.println("택시 요금을 지불합니다.");
+	}
+}
+
+package chapter01.example08;
+
+public class Bus implements Vehicle{
+	
+	@Override
+	public void run() {
+		System.out.println("버스가 출발합니다.");
+		System.out.println("버스가 멈춥니다.");
+		System.out.println("버스 요금을 지불합니다.");
+	}
+}
+package chapter01.example08;
+
+public class Driver {
+
+		public void drive(Vehicle vehicle) {	// 매개변수 타입 - vehicle, 매개변수에 vehicle 인터페이스 자체 혹은 vehicle 구현 객체만 들어올 수 있다.
+			vehicle.run(); // 버스 타입은 vehicle을 구현하기 때문에 들어올 수 있다.
+		}
+}
+package chapter01.example08;
+
+public class DriverMain {
+
+	public static void main(String[] args) {
+		Driver driver = new Driver();
+		Bus bus = new Bus();
+		Taxi taxi = new Taxi();
+		
+		driver.drive(bus);	// 매개변수를 넣어줘야하는 조건이 있음
+		System.out.println();
+		
+		driver.drive(taxi);
+		
+		Vehicle vehicle = new Bus();
+		vehicle.run(); 	// 인터페이스로 올라가라는 의미. 버스타입 이니까 bus.run이랑 동일한 의미
+		driver.drive(vehicle);	// 버스 타입이니까 버스가 실행됨
+	}
+}
+
+출력
+
+버스가 출발합니다.
+버스가 멈춥니다.
+버스 요금을 지불합니다.
+
+
+
