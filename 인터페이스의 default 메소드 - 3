@@ -1,0 +1,61 @@
+상속받은 디폴트 메소드를 처리하는 방법
+3. 디폴트 메소드를 추상 메소드로 재선언한다. 다시 추상메소드로 만드는 것이다.
+자식인터페이스가 부모 걸 건드렸으니까 오버라이드 방식과 동일하다. 디폴트메소드와 추상메소드 둘 중에 뭘로 오버라이드 할건지의 차이이다.
+
+package chapter01.example05;
+
+public interface ParentInterface {
+
+	public void method01(); 	// 추상 메서드 선언
+	
+	public default void method02() {	// default 메서드 선언
+		System.out.println("ParentInterface-method02");
+	}
+}
+
+package chapter01.example05;
+
+public interface ChildInterface extends ParentInterface {
+
+	public void method03();		// ChildInterface에만 있는 추상 메서드 선언, method01과 default메소드도 갖고 있음 + 자식 객체에 method03 추가한것
+	
+	
+    @Override	// 디폴트 메서드를 추상 메서드로 재선언
+    default void method02();
+}
+
+package chapter01.example05;
+
+public class InterfaceMain {
+
+	public static void main(String[] args) {
+		ChildInterface chi3 = new ChildInterface() {
+
+            @Override
+            public void method01() {
+                System.out.println("chi3-method01()");
+            }
+
+            @Override
+            public void method02() {
+                System.out.println("chi3-method02()");
+            }
+
+            @Override
+            public void method03() {
+                System.out.println("chi3-method03()");
+            }
+        };
+
+        chi3.method01();    // chi2의 메서드 호출
+        chi3.method02();    // ChildInterface의 method02() 호출
+        chi3.method03();    // chi3의 메서드 호출
+
+	}
+}
+
+출력
+chi3-method01()
+chi3-method02()
+chi3-method03()
+
