@@ -1,0 +1,61 @@
+package chapter01.example07;
+
+public interface Tire {
+		// 추상메서드
+		void roll();
+}
+
+package chapter01.example07;
+
+public class HankookTire implements Tire { // 타이어의 부품인 한국타이어 - 타이어 타입을 변수로 잡아서 객체를 집어 넣으면 됨.
+
+		@Override
+		public void roll() {
+			System.out.println("한국 타이어가 굴러갑니다.");
+		}
+}
+
+package chapter01.example07;
+
+public class KumhoTire implements Tire {	// 타이어의 부품인 금호타이어. 필드 다형성
+
+		@Override
+		public void roll() {
+			System.out.println("금호 타이어가 굴러갑니다.");
+		}
+}
+
+package chapter01.example07;
+
+public class Car {	// 인터페이스는 구현객체를 담을 수 있다. 부모는 자식을 담을 수 있다와 같은 개념.
+	
+	Tire frontLeftTire = new HankookTire();
+	Tire frontRightTire = new HankookTire();
+	Tire rearLeftTire = new KumhoTire();
+	Tire rearRightTire = new KumhoTire();
+
+	void run() {
+		frontLeftTire.roll();
+		frontRightTire.roll();
+		rearLeftTire.roll();
+		rearRightTire.roll();
+	}
+}
+
+package chapter01.example07;
+
+public class CarMain {
+
+	public static void main(String[] args) {
+		
+		Car car = new Car();
+		car.run();
+		
+		car.frontLeftTire = new KumhoTire(); 	// 금호타이어로 바꿈
+		car.frontRightTire = new KumhoTire();
+		car.rearLeftTire = new HankookTire();	// 한국타이어로 바꿈
+		car.rearRightTire = new HankookTire();
+		System.out.println();
+		car.run();
+	}
+}
