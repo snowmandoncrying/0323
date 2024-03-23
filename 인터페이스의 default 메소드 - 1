@@ -1,0 +1,42 @@
+상속받은 디폴트 메소드를 처리하는 방법
+
+1. 디폴트 메소드를 단순히 상속받는다.
+package chapter01.example03;
+
+public interface ParentInterface {
+
+		public void method01();
+		public default void method02() {
+			System.out.println("ParentInterface-method02");
+		}
+}
+
+package chapter01.example03;
+
+public interface ChildInterface extends ParentInterface {
+
+		public void method03();
+}
+
+package chapter01.example03;
+
+public class InterfaceMain {
+
+	public static void main(String[] args) {
+		ChildInterface chi = new ChildInterface() {	// 익명 구현 객체 - 추상메서드는 항상 오버라이드 해야 함.
+		
+			@Override
+			public void method01() {
+				System.out.println("chi-method01()");
+			}
+			@Override
+			public void method03() {
+				System.out.println("chi-method03()");
+			}
+		}; 	// 세미콜론을 꼭 붙여야한다.
+			chi.method01();		// chi1 의 메서드 호출
+			chi.method02();		// ParentInterface의 method02 호출
+			chi.method03();		// chi3의 메서드 호출
+		
+	}
+}
