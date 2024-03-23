@@ -1,0 +1,55 @@
+상속받은 디폴트 메소드를 처리하는 방법
+2. 자식 인터페이스가 디폴트 메서드를 재정의해서 실행내용을 변경한다.
+
+package chapter01.example04;
+
+public interface ParentInterface {
+
+		public void method01();
+		
+		public default void method02() {
+			System.out.println("ParentInterface-method02");
+		}
+}
+
+package chapter01.example04;
+
+public interface ChildInterface extends ParentInterface {
+
+		public void method03();		// ChildInterface에만 있는 추상 메서드 선언, method01과 default메소드도 갖고 있음 + 자식 객체에 method03 추가한것
+		
+		
+	    @Override	// ParentInterface의 default 메서드 재정의
+	    default void method02() {
+	        System.out.println("ChildInterface-default method02()");
+	    }
+}
+
+package chapter01.example04;
+
+public class InterfaceMain {
+
+	public static void main(String[] args) {
+		
+			ChildInterface chi2 = new ChildInterface() {
+				
+				@Override	// 오버라이드 했으니까 내꺼가 호출됨. 이름 없는 객체인 내가 구현한거니까.
+				public void method01() {
+					System.out.println("chi2-method01()");
+				}
+				@Override
+				public void method03() {
+					System.out.println("chi2-method03()");
+				}
+			};
+				chi2.method01();	// chi2의 메서드 호출
+				chi2.method02();	// ChildInterface의 default method02() 호출
+				chi2.method03();	// chi3의 메서드 호출
+	}
+}
+
+출력
+  
+chi2-method01()
+ChildInterface-default method02()
+chi2-method03()
