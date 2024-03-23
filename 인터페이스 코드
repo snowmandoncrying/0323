@@ -1,0 +1,148 @@
+package chapter01.example1;
+
+public interface Product {  // 인터페이스
+
+		public int getBonusPoint();
+		public String getProductName();
+		public int getPrice();
+		public boolean getCoupon();
+		public int getCouponPrice();
+		
+}
+
+package chapter01.example1;
+
+public class Tv implements Product {
+	
+		private int price = 100;
+		private int bonusPoint = price / 10;
+		private String productName = "Samsung TV";
+		private boolean coupon = true; // 쿠폰을 가지고 있으면 true
+		private int couponPrice = 3; // 3만원 쿠폰 할인
+		
+		@Override 	// 자식객체에서 재정의해야 함. 왜냐하면 인터페이스는 그냥 정의만 하는거니까.
+		public int getBonusPoint() {
+			return bonusPoint;
+		}
+		@Override
+		public int getPrice() {
+			return price;
+		}
+		@Override
+		public String getProductName() {
+			return productName;
+		}
+		@Override
+		public boolean getCoupon() {
+			return coupon;
+		}
+		@Override 
+		public int getCouponPrice() {
+			return couponPrice;
+		}
+
+}
+
+package chapter01.example1;
+
+public class Computer implements Product {
+
+		private int price = 200;
+		private int bonusPoint = price / 20;
+		private String productName = "LG GRAM";
+		private boolean coupon = false; 	// 쿠폰을 가지고 있지 않음
+		private int couponPrice = 0;
+		
+		@Override
+		public int getBonusPoint() {
+			return bonusPoint;
+		}
+		@Override
+		public int getPrice() {
+			return price;
+		}
+		@Override
+		public String getProductName() {
+			return productName;
+		}
+		@Override
+		public boolean getCoupon() {
+			return coupon;
+		}
+		@Override
+		public int getCouponPrice() {
+			return couponPrice;
+		}
+}
+package chapter01.example1;
+
+public class Buyer {
+	
+		int money = 1000; 	// 현재 가지고 있는 돈
+		int bonusPoint = 0; // 현재 보너스 포인트 점수
+		
+		void buy(Product product) {
+			if(product.getPrice() > money) {	// 상품 금액이 갖고 있는 돈보다 클 때
+				System.out.println("충전 금액이 부족합니다.");
+				return;
+			}
+			if(product.getCoupon()) {	// 쿠폰을 가지고 있으면. true면
+				money -= product.getPrice();
+				money += product.getCouponPrice();
+				System.out.println("할인 쿠폰이 적용되어 " + product.getCouponPrice() + " 만원이 할인되었습니다.");
+			}else {
+				money -= product.getPrice(); // 쿠폰이 없으면 그냥 가진 돈에서 상품 가격 뺴면 됨.
+			}
+			money -= product.getPrice();	// 조건식이 끝나면 가진 돈에서 상품가격 차감
+			bonusPoint += product.getBonusPoint();	// 보너스포인트는 상품가격에 따른 포인트점수 추가
+			System.out.println(product.getProductName() + " 을/를 구매하셨습니다.");
+			System.out.println("가격은 " + product.getPrice() + " 만원 입니다.");
+		}
+
+}
+
+package chapter01.example1;
+
+public class ProductMain {
+
+	public static void main(String[] args) {
+		
+		Buyer buyer1 = new Buyer();
+		buyer1.buy(new Tv());
+		System.out.println("현재 잔고는 " + buyer1.money+ " 만원 입니다.");
+		System.out.println("보너스 포인트는 " + buyer1.bonusPoint + " 점 입니다." );
+		System.out.println();
+		
+		Buyer buyer2 = new Buyer();
+		buyer2.buy(new Computer());
+		System.out.println("현재 잔고는 " + buyer2.money+ " 만원 입니다.");
+		System.out.println("보너스 포인트는 " + buyer2.bonusPoint + " 점 입니다." );
+		System.out.println();
+		
+		Buyer buyer3 = new Buyer();
+		buyer3.buy(new Tv());
+		buyer3.buy(new Computer());
+		System.out.println("현재 잔고는 " + buyer3.money+ " 만원 입니다.");
+		System.out.println("보너스 포인트는 " + buyer3.bonusPoint + " 점 입니다." );
+		System.out.println();
+	}
+
+출력
+할인 쿠폰이 적용되어 3 만원이 할인되었습니다.
+Samsung TV 을/를 구매하셨습니다.
+가격은 100 만원 입니다.
+현재 잔고는 803 만원 입니다.
+보너스 포인트는 10 점 입니다.
+
+LG GRAM 을/를 구매하셨습니다.
+가격은 200 만원 입니다.
+현재 잔고는 600 만원 입니다.
+보너스 포인트는 10 점 입니다.
+
+할인 쿠폰이 적용되어 3 만원이 할인되었습니다.
+Samsung TV 을/를 구매하셨습니다.
+가격은 100 만원 입니다.
+LG GRAM 을/를 구매하셨습니다.
+가격은 200 만원 입니다.
+현재 잔고는 403 만원 입니다.
+보너스 포인트는 20 점 입니다.
