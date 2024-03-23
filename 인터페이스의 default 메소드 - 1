@@ -23,20 +23,26 @@ package chapter01.example03;
 public class InterfaceMain {
 
 	public static void main(String[] args) {
-		ChildInterface chi = new ChildInterface() {	// 익명 구현 객체 - 추상메서드는 항상 오버라이드 해야 함.
+		ChildInterface chi1 = new ChildInterface() {	// 익명 구현 객체 - 추상메서드는 항상 오버라이드 해야 함.
 		
 			@Override
 			public void method01() {
-				System.out.println("chi-method01()");
+				System.out.println("chi1-method01()");
 			}
 			@Override
 			public void method03() {
-				System.out.println("chi-method03()");
+				System.out.println("chi1-method03()");
 			}
 		}; 	// 세미콜론을 꼭 붙여야한다.
-			chi.method01();		// chi1 의 메서드 호출
-			chi.method02();		// ParentInterface의 method02 호출
-			chi.method03();		// chi3의 메서드 호출
+			chi1.method01();		// chi1 의 메서드 호출
+			chi1.method02();		// ParentInterface의 method02 호출
+			chi1.method03();		// chi3의 메서드 호출
 		
 	}
 }
+
+출력
+
+chi1-method01()
+ParentInterface-method02
+chi1-method03()
